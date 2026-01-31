@@ -1,0 +1,9 @@
+CONFIDENTIAL: Merger Acquisition Due Diligence Findings
+
+Pursuant to our engagement agreement, this memorandum summarizes preliminary findings from the operational due diligence conducted on Acme Corporation during the period January 15th through January 28th. Critical items requiring immediate executive attention are highlighted below.
+
+Financial irregularities discovered in accounts receivable aging reports suggest potential revenue recognition issues spanning three fiscal quarters. Working capital requirements exceed initial projections by approximately eighteen percent, primarily driven by inventory turnover ratios significantly below industry benchmarks. EBITDA adjustments necessary to normalize one-time expenses and non-recurring items reduce valuation multiples from 8.2x to 6.7x.
+
+Operational synergies previously estimated at twelve million annually appear optimistic given incompatible ERP systems, divergent organizational cultures, and substantial technology debt requiring modernization investments. Integration timeline extends minimum nine months beyond original assumptions, delaying projected cost savings realization until fiscal year 2027.
+
+Legal review identified outstanding litigation exposure totaling forty-three million dollars across intellectual property disputes, employment claims, and regulatory compliance matters. Recommend establishing escrow provisions and obtaining comprehensive representations and warranties insurance coverage prior to transaction closing.

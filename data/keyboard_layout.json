@@ -1,0 +1,100 @@
+{
+  "key_size": 50,
+  "spacing": 4,
+  "colors": {
+    "base": "#E8E4D9",
+    "current": "#2196F3",
+    "next": "#2196F3",
+    "border": "#8C8676",
+    "text": "#000000"
+  },
+  "rows": [
+    {
+      "y": 0,
+      "keys": [
+        {"label": "Esc", "code": "Escape", "x": 0, "width": 1.0},
+        {"label": "`", "shift_label": "~", "code": "Backquote", "x": 2.5, "width": 1.0},
+        {"label": "1", "shift_label": "!", "code": "Digit1", "x": 3.5, "width": 1.0},
+        {"label": "2", "shift_label": "@", "code": "Digit2", "x": 4.5, "width": 1.0},
+        {"label": "3", "shift_label": "#", "code": "Digit3", "x": 5.5, "width": 1.0},
+        {"label": "4", "shift_label": "$", "code": "Digit4", "x": 6.5, "width": 1.0},
+        {"label": "5", "shift_label": "%", "code": "Digit5", "x": 7.5, "width": 1.0},
+        {"label": "6", "shift_label": "^", "code": "Digit6", "x": 8.5, "width": 1.0},
+        {"label": "7", "shift_label": "&", "code": "Digit7", "x": 9.5, "width": 1.0},
+        {"label": "8", "shift_label": "*", "code": "Digit8", "x": 10.5, "width": 1.0},
+        {"label": "9", "shift_label": "(", "code": "Digit9", "x": 11.5, "width": 1.0},
+        {"label": "0", "shift_label": ")", "code": "Digit0", "x": 12.5, "width": 1.0},
+        {"label": "-", "shift_label": "_", "code": "Minus", "x": 13.5, "width": 1.0},
+        {"label": "=", "shift_label": "+", "code": "Equal", "x": 14.5, "width": 1.0},
+        {"label": "Backspace", "code": "Backspace", "x": 15.5, "width": 2.0}
+      ]
+    },
+    {
+      "y": 1,
+      "keys": [
+        {"label": "Tab", "code": "Tab", "x": 0, "width": 1.5},
+        {"label": "Q", "code": "KeyQ", "x": 1.5, "width": 1.0},
+        {"label": "W", "code": "KeyW", "x": 2.5, "width": 1.0},
+        {"label": "E", "code": "KeyE", "x": 3.5, "width": 1.0},
+        {"label": "R", "code": "KeyR", "x": 4.5, "width": 1.0},
+        {"label": "T", "code": "KeyT", "x": 5.5, "width": 1.0},
+        {"label": "Y", "code": "KeyY", "x": 6.5, "width": 1.0},
+        {"label": "U", "code": "KeyU", "x": 7.5, "width": 1.0},
+        {"label": "I", "code": "KeyI", "x": 8.5, "width": 1.0},
+        {"label": "O", "code": "KeyO", "x": 9.5, "width": 1.0},
+        {"label": "P", "code": "KeyP", "x": 10.5, "width": 1.0},
+        {"label": "[", "shift_label": "{", "code": "BracketLeft", "x": 11.5, "width": 1.0},
+        {"label": "]", "shift_label": "}", "code": "BracketRight", "x": 12.5, "width": 1.0},
+        {"label": "\\", "shift_label": "|", "code": "Backslash", "x": 13.5, "width": 1.5}
+      ]
+    },
+    {
+      "y": 2,
+      "keys": [
+        {"label": "Caps", "code": "CapsLock", "x": 0, "width": 1.75},
+        {"label": "A", "code": "KeyA", "x": 1.75, "width": 1.0},
+        {"label": "S", "code": "KeyS", "x": 2.75, "width": 1.0},
+        {"label": "D", "code": "KeyD", "x": 3.75, "width": 1.0},
+        {"label": "F", "code": "KeyF", "x": 4.75, "width": 1.0},
+        {"label": "G", "code": "KeyG", "x": 5.75, "width": 1.0},
+        {"label": "H", "code": "KeyH", "x": 6.75, "width": 1.0},
+        {"label": "J", "code": "KeyJ", "x": 7.75, "width": 1.0},
+        {"label": "K", "code": "KeyK", "x": 8.75, "width": 1.0},
+        {"label": "L", "code": "KeyL", "x": 9.75, "width": 1.0},
+        {"label": ";", "shift_label": ":", "code": "Semicolon", "x": 10.75, "width": 1.0},
+        {"label": "'", "shift_label": "\"", "code": "Quote", "x": 11.75, "width": 1.0},
+        {"label": "Enter", "code": "Enter", "x": 12.75, "width": 2.25}
+      ]
+    },
+    {
+      "y": 3,
+      "keys": [
+        {"label": "Shift", "code": "ShiftLeft", "x": 0, "width": 2.25},
+        {"label": "Z", "code": "KeyZ", "x": 2.25, "width": 1.0},
+        {"label": "X", "code": "KeyX", "x": 3.25, "width": 1.0},
+        {"label": "C", "code": "KeyC", "x": 4.25, "width": 1.0},
+        {"label": "V", "code": "KeyV", "x": 5.25, "width": 1.0},
+        {"label": "B", "code": "KeyB", "x": 6.25, "width": 1.0},
+        {"label": "N", "code": "KeyN", "x": 7.25, "width": 1.0},
+        {"label": "M", "code": "KeyM", "x": 8.25, "width": 1.0},
+        {"label": ",", "shift_label": "<", "code": "Comma", "x": 9.25, "width": 1.0},
+        {"label": ".", "shift_label": ">", "code": "Period", "x": 10.25, "width": 1.0},
+        {"label": "/", "shift_label": "?", "code": "Slash", "x": 11.25, "width": 1.0},
+        {"label": "Shift", "code": "ShiftRight", "x": 12.25, "width": 2.75}
+      ]
+    },
+    {
+      "y": 4,
+      "keys": [
+        {"label": "Ctrl", "code": "ControlLeft", "x": 0, "width": 1.25},
+        {"label": "Win", "code": "MetaLeft", "x": 1.25, "width": 1.25},
+        {"label": "Alt", "code": "AltLeft", "x": 2.5, "width": 1.25},
+        {"label": "Space", "code": "Space", "x": 3.75, "width": 6.25},
+        {"label": "Alt", "code": "AltRight", "x": 10.0, "width": 1.25},
+        {"label": "Win", "code": "MetaRight", "x": 11.25, "width": 1.25},
+        {"label": "Menu", "code": "ContextMenu", "x": 12.5, "width": 1.25},
+        {"label": "Ctrl", "code": "ControlRight", "x": 13.75, "width": 1.25}
+      ]
+    }
+  ]
+}

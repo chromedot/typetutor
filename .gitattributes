@@ -1,0 +1,28 @@
+# Set default behavior to automatically normalize line endings to CRLF on Windows
+* text=auto eol=crlf
+
+# Python files
+*.py text eol=crlf
+*.pyw text eol=crlf
+
+# Text files
+*.txt text eol=crlf
+*.md text eol=crlf
+*.json text eol=crlf
+*.spec text eol=crlf
+
+# Windows scripts
+*.bat text eol=crlf
+*.cmd text eol=crlf
+*.ps1 text eol=crlf
+
+# Shell scripts (if any, keep LF)
+*.sh text eol=lf
+
+# Binary files
+*.png binary
+*.jpg binary
+*.jpeg binary
+*.ico binary
+*.exe binary
+*.dll binary
