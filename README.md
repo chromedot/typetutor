@@ -158,7 +158,7 @@ typetutor/
 
 ## Dependencies
 
-- **PySide6** (6.10+) - Qt for Python GUI framework
+- **PySide6** (6.8.0.2+) - Qt for Python GUI framework
 - **PyInstaller** (6.18+) - Executable packaging tool
 
 All dependencies are listed in `requirements.txt`.
