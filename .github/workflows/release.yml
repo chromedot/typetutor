@@ -45,24 +45,26 @@ jobs:
         pip install pyinstaller
 
     - name: Build with PyInstaller
+      shell: bash
       # We use the command line directly instead of the .spec file to handle cross-platform path separators
+      # We use directory adds instead of globs to avoid shell expansion issues
       run: |
         pyinstaller --name "TypeTutor" \
           --onefile \
           --windowed \
           --clean \
-          --add-data "data/levels/*.txt${{ matrix.sep }}data/levels" \
-          --add-data "data/levels/*.py${{ matrix.sep }}data/levels" \
-          --add-data "data/levels/*.md${{ matrix.sep }}data/levels" \
+          --add-data "data/levels${{ matrix.sep }}data/levels" \
           --add-data "data/keyboard_layout.json${{ matrix.sep }}data" \
           src/main.py
 
     - name: Rename Output (Windows)
       if: matrix.os == 'windows-latest'
+      shell: bash
       run: mv dist/TypeTutor.exe dist/${{ matrix.artifact_name }}
 
     - name: Rename Output (Unix)
       if: matrix.os != 'windows-latest'
+      shell: bash
       run: mv dist/TypeTutor dist/${{ matrix.artifact_name }}
 
     - name: Upload Artifact
