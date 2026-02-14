@@ -17,16 +17,13 @@ jobs:
         os: [ubuntu-latest, windows-latest, macos-latest]
         include:
           - os: ubuntu-latest
-            artifact_name: TypeTutor-Linux
-            asset_name: TypeTutor-Linux
+            artifact_name: TypeTutor-Linux-x64
             sep: ':'
           - os: windows-latest
             artifact_name: TypeTutor-Windows.exe
-            asset_name: TypeTutor-Windows.exe
             sep: ';'
           - os: macos-latest
             artifact_name: TypeTutor-macOS
-            asset_name: TypeTutor-macOS
             sep: ':'
 
     steps:
@@ -52,8 +49,6 @@ jobs:
 
     - name: Build with PyInstaller
       shell: bash
-      # We use the command line directly instead of the .spec file to handle cross-platform path separators
-      # We use directory adds instead of globs to avoid shell expansion issues
       run: |
         pyinstaller --name "TypeTutor" \
           --onefile \
@@ -79,8 +74,39 @@ jobs:
         name: ${{ matrix.artifact_name }}
         path: dist/${{ matrix.artifact_name }}
 
+  build-arm64:
+    name: Build for Linux ARM64
+    runs-on: ubuntu-latest
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v4
+
+    - name: Set up QEMU
+      uses: docker/setup-qemu-action@v3
+
+    - name: Build ARM64 in Docker
+      run: |
+        docker run --rm --platform linux/arm64 \
+        -v ${{ github.workspace }}:/work \
+        -w /work \
+        python:3.11-bookworm \
+        /bin/bash -c "
+          apt-get update && \
+          apt-get install -y libxcb-cursor0 libxcb-icccm4 libxcb-keysyms1 libxcb-image0 libxcb-render-util0 libxcb-shape0 libxcb-xinerama0 libxcb-xkb1 libxkbcommon-x11-0 libdbus-1-3 libfontconfig1 libxcb-util1 && \
+          pip install -r requirements.txt && \
+          pip install pyinstaller && \
+          pyinstaller --name TypeTutor-Linux-arm64 --onefile --windowed --clean --add-data 'data/levels:data/levels' --add-data 'data/keyboard_layout.json:data' src/main.py && \
+          chown -R $(id -u):$(id -g) dist/
+        "
+
+    - name: Upload Artifact
+      uses: actions/upload-artifact@v4
+      with:
+        name: TypeTutor-Linux-arm64
+        path: dist/TypeTutor-Linux-arm64
+
   release:
-    needs: build
+    needs: [build, build-arm64]
     runs-on: ubuntu-latest
     steps:
     - name: Download All Artifacts
@@ -90,8 +116,9 @@ jobs:
       uses: softprops/action-gh-release@v1
       with:
         files: |
-          TypeTutor-Linux/TypeTutor-Linux
+          TypeTutor-Linux-x64/TypeTutor-Linux-x64
           TypeTutor-Windows.exe/TypeTutor-Windows.exe
           TypeTutor-macOS/TypeTutor-macOS
+          TypeTutor-Linux-arm64/TypeTutor-Linux-arm64
       env:
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
