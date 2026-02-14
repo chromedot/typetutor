@@ -86,25 +86,15 @@ jobs:
     - name: Set up QEMU
       uses: docker/setup-qemu-action@v3
 
+    - name: Set up Docker Buildx
+      uses: docker/setup-buildx-action@v3
+
     - name: Build ARM64 in Docker
       run: |
-        docker run --rm --platform linux/arm64 \
-        -v ${{ github.workspace }}:/work \
-        -w /work \
-        python:3.11-bookworm \
-        /bin/bash -c "
-          apt-get update && \
-          apt-get install -y libxcb-cursor0 libxcb-icccm4 libxcb-keysyms1 libxcb-image0 libxcb-render-util0 libxcb-shape0 libxcb-xinerama0 libxcb-xkb1 libxkbcommon-x11-0 libdbus-1-3 libfontconfig1 libxcb-util1 && \
-          pip install --upgrade pip && \
-          sed -i 's/PySide6==6\.[0-9]\+\.[0-9]\+\(\.[0-9]\+\)\?/PySide6==6.8.0.2/g' requirements.txt && \
-          sed -i 's/PySide6_Addons==6\.[0-9]\+\.[0-9]\+\(\.[0-9]\+\)\?/PySide6_Addons==6.8.0.2/g' requirements.txt && \
-          sed -i 's/PySide6_Essentials==6\.[0-9]\+\.[0-9]\+\(\.[0-9]\+\)\?/PySide6_Essentials==6.8.0.2/g' requirements.txt && \
-          sed -i 's/shiboken6==6\.[0-9]\+\.[0-9]\+\(\.[0-9]\+\)\?/shiboken6==6.8.0.2/g' requirements.txt && \
-          pip install -r requirements.txt && \
-          pip install pyinstaller && \
-          pyinstaller --name TypingTutor-Linux-arm64 --onefile --windowed --clean --add-data 'data/levels:data/levels' --add-data 'data/keyboard_layout.json:data' src/main.py && \
-          chown -R $(id -u):$(id -g) dist/
-        "
+        docker build -t typetutor-arm64 -f Dockerfile.arm64 --platform linux/arm64 .
+        docker run --rm --platform linux/arm64 -v ${{ github.workspace }}/dist:/app/dist typetutor-arm64
+        # Ensure the file is owned by the runner user so it can be uploaded
+        sudo chown -R $USER:$USER dist/
 
     - name: Upload ARM64 Artifact
       uses: actions/upload-artifact@v4
@@ -112,21 +102,74 @@ jobs:
         name: TypingTutor-Linux-arm64
         path: dist/TypingTutor-Linux-arm64
 
+  build-linux-amd64:
+    name: Build for Linux AMD64
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v4
+
+    - name: Build AMD64 in Docker
+      run: |
+        docker build -t typetutor-amd64 -f Dockerfile.amd64 .
+        docker run --rm -v ${{ github.workspace }}/dist:/app/dist typetutor-amd64
+        sudo chown -R $USER:$USER dist/
+
+    - name: Upload AMD64 Artifact
+      uses: actions/upload-artifact@v4
+      with:
+        name: TypingTutor-Linux-amd64
+        path: dist/TypingTutor-Linux-amd64
+
+  build-macos:
+    name: Build for macOS
+    runs-on: macos-latest
+
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v4
+
+    - name: Set up Python
+      uses: actions/setup-python@v5
+      with:
+        python-version: '3.11'
+
+    - name: Install dependencies
+      run: |
+        python -m pip install --upgrade pip
+        pip install -r requirements.txt
+        pip install pyinstaller
+
+    - name: Build with PyInstaller
+      run: |
+        pyinstaller --name TypingTutor-macOS --onefile --windowed --clean --add-data "data/levels:data/levels" --add-data "data/keyboard_layout.json:data" src/main.py
+
+    - name: Upload macOS Artifact
+      uses: actions/upload-artifact@v4
+      with:
+        name: TypingTutor-macOS
+        path: dist/TypingTutor-macOS
+
   release:
-    needs: [build-windows, build-arm64]
+    needs: [build-windows, build-arm64, build-linux-amd64, build-macos]
     runs-on: ubuntu-latest
     if: startsWith(github.ref, 'refs/tags/')  # Only create release for version tags
 
     steps:
     - name: Download All Artifacts
       uses: actions/download-artifact@v4
+      with:
+        path: artifacts
 
     - name: Create Release
       uses: softprops/action-gh-release@v2
       with:
         files: |
-          TypingTutor-Windows/TypingTutor.exe
-          TypingTutor-Linux-arm64/TypingTutor-Linux-arm64
+          artifacts/TypingTutor-Windows/TypingTutor.exe
+          artifacts/TypingTutor-Linux-arm64/TypingTutor-Linux-arm64
+          artifacts/TypingTutor-Linux-amd64/TypingTutor-Linux-amd64
+          artifacts/TypingTutor-macOS/TypingTutor-macOS
         draft: false
         prerelease: false
         generate_release_notes: true
