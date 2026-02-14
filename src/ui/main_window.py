@@ -4,7 +4,7 @@ Main application window.
 from PySide6.QtWidgets import (QMainWindow, QWidget, QVBoxLayout, QHBoxLayout,
                                 QComboBox, QTextEdit, QLabel, QPushButton,
                                 QMessageBox, QScrollArea)
-from PySide6.QtCore import Qt
+from PySide6.QtCore import Qt, QTimer
 from PySide6.QtGui import QFont, QTextCharFormat, QColor, QTextCursor
 from keyboard_widget import KeyboardWidget
 
@@ -35,6 +35,46 @@ class MainWindow(QMainWindow):
 
         # Grab keyboard focus immediately
         self.setFocus()
+        
+        # Show welcome message
+        QTimer.singleShot(100, self.show_welcome_message)
+
+    def show_welcome_message(self):
+        """Show the welcome instructions popup."""
+        msg = QMessageBox(self)
+        msg.setWindowTitle("Welcome to TypeTutor")
+        msg.setText("Select Level 1 thru 5, press any key to start")
+        msg.setIcon(QMessageBox.Information)
+        
+        # Style the message box to match the vintage theme
+        # Beige background, black text, blue buttons
+        style = """
+            QMessageBox {
+                background-color: #E8E4D9;
+                color: #000000;
+            }
+            QLabel {
+                color: #000000;
+                font-family: "Courier New";
+                font-size: 14px;
+            }
+            QPushButton {
+                background-color: #2196F3;
+                color: white;
+                border: 1px solid #8C8676;
+                padding: 5px 15px;
+                border-radius: 4px;
+                font-weight: bold;
+            }
+            QPushButton:hover {
+                background-color: #1976D2;
+            }
+            QPushButton:pressed {
+                background-color: #0D47A1;
+            }
+        """
+        msg.setStyleSheet(style)
+        msg.exec()
 
     def _setup_ui(self):
         """Setup the user interface."""
