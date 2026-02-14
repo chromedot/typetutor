@@ -102,19 +102,20 @@ jobs:
           sed -i 's/shiboken6==6\.[0-9]*\.[0-9]*\(\.[0-9]*\)*/shiboken6==6.8.0.2/g' requirements.txt && \
           pip install -r requirements.txt && \
           pip install pyinstaller && \
-          pyinstaller --name TypeTutor-Linux-arm64 --onefile --windowed --clean --add-data 'data/levels:data/levels' --add-data 'data/keyboard_layout.json:data' src/main.py && \
+          pyinstaller --name TypingTutor-Linux-arm64 --onefile --windowed --clean --add-data 'data/levels:data/levels' --add-data 'data/keyboard_layout.json:data' src/main.py && \
           chown -R $(id -u):$(id -g) dist/
         "
 
     - name: Upload ARM64 Artifact
       uses: actions/upload-artifact@v4
       with:
-        name: TypeTutor-Linux-arm64
-        path: dist/TypeTutor-Linux-arm64
+        name: TypingTutor-Linux-arm64
+        path: dist/TypingTutor-Linux-arm64
 
   release:
     needs: [build-windows, build-arm64]
     runs-on: ubuntu-latest
+    if: startsWith(github.ref, 'refs/tags/')  # Only create release for version tags
 
     steps:
     - name: Download All Artifacts
@@ -125,7 +126,7 @@ jobs:
       with:
         files: |
           TypingTutor-Windows/TypingTutor.exe
-          TypeTutor-Linux-arm64/TypeTutor-Linux-arm64
+          TypingTutor-Linux-arm64/TypingTutor-Linux-arm64
         draft: false
         prerelease: false
         generate_release_notes: true
